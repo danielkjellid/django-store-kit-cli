@@ -1,0 +1,49 @@
+name: CI
+
+on: push
+
+env:
+  COLUMNS: 120
+
+jobs:
+  python-lint:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: 'ruff format'
+            check: ruff format dsk --check
+          - name: 'ruff lint'
+            check: ruff check dsk
+          - name: 'mypy'
+            check: mypy dsk
+    name: ${{ matrix.name }}
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+      - name: Setup project
+        uses: ./.github/actions/setup-python
+      - name: Run ${{ matrix.name }}
+        run: poetry run ${{ matrix.check }}
+
+  python-missing-init:
+    name: missing __init__.py files
+    permissions: write-all
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: check for missing __init__.py files
+        uses: ljodal/python-actions/check-for-missing-init@feature/check-for-missing-init
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          paths: nest
+
+  ci-done:
+    name: CI done
+    needs:
+      - python-lint
+      - python-missing-init
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "CI done!"

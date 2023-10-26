@@ -21,3 +21,7 @@ click = "^8.1.7"
 ruff = "^0.1.2"
 mypy = "^1.6.1"
 
+[tool.mypy]
+python_version = "3.12"
+follow_imports = "normal"
+strict = true
