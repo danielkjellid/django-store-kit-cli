@@ -2,7 +2,6 @@ import rich_click as click
 import functools
 from datetime import datetime
 from typing import Any
-from ..console import console
 
 
 DEFAULT_COLOR = "magenta"

@@ -1,12 +1,10 @@
 from contextlib import contextmanager
 
 import rich_click as click
-from .text import echo_with_time, text_color, DEFAULT_COLOR
+from .text import text_color, DEFAULT_COLOR
 from ..console import console
 from typing import Sequence, Any
-import rich_click as click
 from rich.progress import Progress
-from rich_click.rich_click import rich_format_error
 from collections import deque
 
 
