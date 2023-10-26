@@ -37,7 +37,7 @@ jobs:
         uses: ljodal/python-actions/check-for-missing-init@feature/check-for-missing-init
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          paths: nest
+          paths: dsk
 
   ci-done:
     name: CI done
