@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "django-store-kit-cli"
+version = "0.1.0"
+description = "Django store kit cli is a command line interace that accompanies the django-store-kit package, which has one goal - to collect common utilites useful for personal django projects"
+authors = ["Daniel Kjellid <daniel@kjellid.no>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "dsk"}]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "3.12"
+rich = "^13.6.0"
+rich-click = "^1.7.0"
+click = "^8.1.7"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.2"
+mypy = "^1.6.1"
+
