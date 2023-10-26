@@ -21,7 +21,7 @@ jobs:
     name: ${{ matrix.name }}
     steps:
       - name: Checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup project
         uses: ./.github/actions/setup-python
       - name: Run ${{ matrix.name }}
@@ -32,7 +32,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: check for missing __init__.py files
         uses: ljodal/python-actions/check-for-missing-init@feature/check-for-missing-init
         with:
