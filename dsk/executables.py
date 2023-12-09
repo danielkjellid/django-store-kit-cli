@@ -8,15 +8,15 @@ from typing import Any
 import sys
 
 
-def run_in_background(*args: str | pathlib.Path, **kwargs: Any):
+def run_in_background(*args: str | pathlib.Path, **kwargs: Any) -> Any:
     return subprocess.Popen(args, **kwargs)
 
 
-def run_in_dir(*args: str | pathlib.Path, folder: str | pathlib.Path):
+def run_in_dir(*args: str | pathlib.Path, folder: str | pathlib.Path) -> Any:
     return subprocess.Popen(args, cwd=folder, stdout=subprocess.DEVNULL)
 
 
-def interact(command: str | pathlib.Path, *args: str, env=None) -> None:
+def interact(command: str | pathlib.Path, *args: str, env: dict[str, Any] | None = None) -> None:
     """
     Run a sub-command interactively.
     """
@@ -35,11 +35,11 @@ def fzf(
     allow_multiple: bool = False,
     allow_new_input: bool = False,
     allow_none: bool = False,
-) -> str | None:
+) -> Any:
     """
     Spawn fzf select and select between 'choices'.
     """
-
+    selection: Any
     choices.sort(reverse=True)
 
     if allow_none:
@@ -104,7 +104,7 @@ def discover_project_apps() -> list[Path]:
     """
 
     apps = []
-    project_sub_folders = os.getcwd().iterdir()
+    project_sub_folders = Path(os.getcwd()).iterdir()
 
     for folder in filter(Path.is_dir, project_sub_folders):
         apps_path = folder / "apps.py"

@@ -16,6 +16,7 @@ python = "3.12"
 rich = "^13.6.0"
 rich-click = "^1.7.0"
 click = "^8.1.7"
+ruff = "^0.1.7"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.2"
