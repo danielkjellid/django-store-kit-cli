@@ -16,7 +16,9 @@ def run_in_dir(*args: str | pathlib.Path, folder: str | pathlib.Path) -> Any:
     return subprocess.Popen(args, cwd=folder, stdout=subprocess.DEVNULL)
 
 
-def interact(command: str | pathlib.Path, *args: str, env: dict[str, Any] | None = None) -> None:
+def interact(
+    command: str | pathlib.Path, *args: str, env: dict[str, Any] | None = None
+) -> None:
     """
     Run a sub-command interactively.
     """

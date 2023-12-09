@@ -6,13 +6,15 @@ from .text import text_color, DEFAULT_COLOR
 from ..console import console
 from types import TracebackType
 
-from typing import Sequence, Any, Generator, Type, Iterable, Any
+from typing import Sequence, Any, Generator, Type, Iterable
 from rich.progress import Progress
 from collections import deque
 
 
 @contextmanager
-def action(text: str, *, add_icon: bool = True, color: str = DEFAULT_COLOR) -> Generator[None, None, None]:
+def action(
+    text: str, *, add_icon: bool = True, color: str = DEFAULT_COLOR
+) -> Generator[None, None, None]:
     # Always print timestamp of action.
     console._log_render.omit_repeated_times = False
     console.log(text)
@@ -39,7 +41,9 @@ def progress(text: str, *, tasks: Sequence[Any]) -> Generator[None, None, None]:
 
 
 class BulletListIterator:
-    def __init__(self, it: Iterable[Any], color: str = DEFAULT_COLOR, add_indent: bool = True) -> None:
+    def __init__(
+        self, it: Iterable[Any], color: str = DEFAULT_COLOR, add_indent: bool = True
+    ) -> None:
         self._it = iter(it)
         self._add_indent = add_indent
         self._color = text_color(color)
@@ -64,7 +68,12 @@ class BulletListIterator:
     def __enter__(self) -> BulletListIterator:
         return self
 
-    def __exit__(self,  exc_type: Type[BaseException] | None, exc_val: BaseException | None, exc_traceback: TracebackType | None,) -> None:
+    def __exit__(
+        self,
+        exc_type: Type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_traceback: TracebackType | None,
+    ) -> None:
         last = self._last
         if last is not None:
             self._last = None

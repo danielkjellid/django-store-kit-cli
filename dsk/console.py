@@ -1,4 +1,4 @@
-from rich_click.rich_click import _get_rich_console, ALIGN_ERRORS_PANEL # type: ignore
+from rich_click.rich_click import _get_rich_console, ALIGN_ERRORS_PANEL  # type: ignore
 from rich.panel import Panel
 from typing import Any
 
