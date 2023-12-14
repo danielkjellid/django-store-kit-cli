@@ -56,7 +56,6 @@ jobs:
       - mypy
       - lockfile-consistency
       - unused-dependencies
-      - python-tests
       - python-missing-init
     runs-on: ubuntu-20.04
     steps:
