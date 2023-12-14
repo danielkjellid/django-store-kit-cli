@@ -12,7 +12,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-python = "3.12"
+python = "3.12.1"
 rich = "^13.6.0"
 rich-click = "^1.7.0"
 click = "^8.1.7"
@@ -23,6 +23,6 @@ ruff = "^0.1.2"
 mypy = "^1.6.1"
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.12.1"
 follow_imports = "normal"
 strict = true
