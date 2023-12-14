@@ -35,6 +35,6 @@ extend_exclude = [".*tests.*"]
 # Installed, but not explicitly imported
 DEP002 = [
     "rich",
-    "rich_click",
+    "rich-click",
     "click"
 ]
