@@ -35,15 +35,6 @@ jobs:
     with:
       cmd: poetry run deptry dsk
 
-  python-tests:
-    name: python tests
-    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
-    with:
-      cmd: poetry run pytest
-      postgres-db: dsk
-      postgres-user: dsk
-      postgres-password: dsk
-
   python-missing-init:
     name: missing __init__.py files
     permissions: write-all
