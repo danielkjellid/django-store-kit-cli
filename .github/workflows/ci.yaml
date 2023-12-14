@@ -6,26 +6,43 @@ env:
   COLUMNS: 120
 
 jobs:
-  python-lint:
-    runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: 'ruff format'
-            check: ruff format dsk --check
-          - name: 'ruff lint'
-            check: ruff check dsk
-          - name: 'mypy'
-            check: mypy dsk
-    name: ${{ matrix.name }}
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v3
-      - name: Setup project
-        uses: ./.github/actions/setup-python
-      - name: Run ${{ matrix.name }}
-        run: poetry run ${{ matrix.check }}
+  ruff-format:
+    name: ruff format
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
+    with:
+      cmd: poetry run ruff format store_kit -- --check
+
+  ruff-lint:
+    name: ruff lint
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
+    with:
+      cmd: poetry run ruff store_kit
+
+  mypy:
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
+    with:
+      cmd: poetry run mypy .
+
+  lockfile-consistency:
+    name: lockfile consistency
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
+    with:
+      cmd: poetry lock --check
+
+  unused-dependencies:
+    name: unused dependencies
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
+    with:
+      cmd: poetry run deptry store_kit
+
+  python-tests:
+    name: python tests
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
+    with:
+      cmd: poetry run pytest
+      postgres-db: store_kit
+      postgres-user: store_kit
+      postgres-password: store_kit
 
   python-missing-init:
     name: missing __init__.py files
@@ -37,12 +54,18 @@ jobs:
         uses: ljodal/python-actions/check-for-missing-init@feature/check-for-missing-init
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          paths: dsk
+          paths: store_kit
 
   ci-done:
+    # Gather job which deploy workflow can wait on.
     name: CI done
     needs:
-      - python-lint
+      - ruff-format
+      - ruff-lint
+      - mypy
+      - lockfile-consistency
+      - unused-dependencies
+      - python-tests
       - python-missing-init
     runs-on: ubuntu-20.04
     steps:
