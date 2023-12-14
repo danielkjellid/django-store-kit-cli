@@ -24,6 +24,6 @@ mypy = "^1.6.1"
 deptry = "^0.12.0"
 
 [tool.mypy]
-python_version = "3.12.1"
+python_version = "3.12"
 follow_imports = "normal"
 strict = true
