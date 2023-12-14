@@ -11,18 +11,18 @@ jobs:
     name: ruff format
     uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
     with:
-      cmd: poetry run ruff format ${{ env.PACKAGE }} -- --check
+      cmd: poetry run ruff format $PACKAGE -- --check
 
   ruff-lint:
     name: ruff lint
     uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
     with:
-      cmd: poetry run ruff ${{ env.PACKAGE }}
+      cmd: poetry run ruff $PACKAGE
 
   mypy:
     uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
     with:
-      cmd: poetry run mypy ${{ env.PACKAGE }}
+      cmd: poetry run mypy $PACKAGE
 
   lockfile-consistency:
     name: lockfile consistency
@@ -34,16 +34,16 @@ jobs:
     name: unused dependencies
     uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
     with:
-      cmd: poetry run deptry ${{ env.PACKAGE }}
+      cmd: poetry run deptry $PACKAGE
 
   python-tests:
     name: python tests
     uses: danielkjellid/github-actions/.github/workflows/python.yaml@local-actions
     with:
       cmd: poetry run pytest
-      postgres-db: ${{ env.PACKAGE }}
-      postgres-user: ${{ env.PACKAGE }}
-      postgres-password: ${{ env.PACKAGE }}
+      postgres-db: $PACKAGE
+      postgres-user: $PACKAGE
+      postgres-password: $PACKAGE
 
   python-missing-init:
     name: missing __init__.py files
@@ -55,7 +55,7 @@ jobs:
         uses: ljodal/python-actions/check-for-missing-init@feature/check-for-missing-init
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          paths: ${{ env.PACKAGE }}
+          paths: $PACKAGE
 
   ci-done:
     # Gather job which deploy workflow can wait on.
