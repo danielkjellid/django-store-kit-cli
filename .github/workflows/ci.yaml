@@ -6,26 +6,34 @@ env:
   COLUMNS: 120
 
 jobs:
-  python-lint:
-    runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: 'ruff format'
-            check: ruff format dsk --check
-          - name: 'ruff lint'
-            check: ruff check dsk
-          - name: 'mypy'
-            check: mypy dsk
-    name: ${{ matrix.name }}
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v3
-      - name: Setup project
-        uses: ./.github/actions/setup-python
-      - name: Run ${{ matrix.name }}
-        run: poetry run ${{ matrix.check }}
+  ruff-format:
+    name: ruff format
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@main
+    with:
+      cmd: poetry run ruff format dsk -- --check
+
+  ruff-lint:
+    name: ruff lint
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@main
+    with:
+      cmd: poetry run ruff dsk
+
+  mypy:
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@main
+    with:
+      cmd: poetry run mypy dsk
+
+  lockfile-consistency:
+    name: lockfile consistency
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@main
+    with:
+      cmd: poetry lock --check
+
+  unused-dependencies:
+    name: unused dependencies
+    uses: danielkjellid/github-actions/.github/workflows/python.yaml@main
+    with:
+      cmd: poetry run deptry dsk
 
   python-missing-init:
     name: missing __init__.py files
@@ -40,9 +48,14 @@ jobs:
           paths: dsk
 
   ci-done:
+    # Gather job which deploy workflow can wait on.
     name: CI done
     needs:
-      - python-lint
+      - ruff-format
+      - ruff-lint
+      - mypy
+      - lockfile-consistency
+      - unused-dependencies
       - python-missing-init
     runs-on: ubuntu-20.04
     steps:
